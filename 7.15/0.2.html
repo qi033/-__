@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta me="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+
+<body>
+    用户名：<input type="text" id="me" value="q13456789"><span id="id1"></span>
+    <br>
+    密码：<input type="text" id="ord" value="qi999000"><span id="id2"></span>
+    <br>
+    确认密码：<input type="text" id="pwd" value="qi999000"><span id="id3"></span>
+    <br>
+    手机号：<input type="text" id="ne" value="17639332880"><span id="id4"></span>
+    <br>
+    姓名：<input type="text" id="ma" value="小明"><span id="id5"></span>
+    <br>
+    身份证号：<input type="text" id="shenfen" value="410922200305150959"><span id="id6"></span><br>
+    <button id="btn">提交</button>
+    <table>
+        <thead>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>手机号</th>
+            <th>姓名</th>
+            <th>身份证号</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+</body>
+<script>
+    window.onload = function () {
+
+        var me = document.getElementById('me')
+        var ord = document.getElementById('ord')
+        var pwd = document.getElementById('pwd')
+        var ma = document.getElementById('ma')
+        var ne = document.getElementById('ne')
+        var shenfen = document.getElementById('shenfen')
+
+
+        var meEx = /^[a-z]\w/i
+        var ordEx = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/
+        var maEx = /^[\u4e00-\u9fa5]{2,4}$/
+        var neEx = /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/
+        var shenfenEx = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+        // onfocus
+
+        var id1 = document.getElementById('id1')
+        var id2 = document.getElementById('id2')
+        var id3 = document.getElementById('id3')
+        var id4 = document.getElementById('id4')
+        var id5 = document.getElementById('id5')
+        var id6 = document.getElementById('id6')
+
+        me.onblur = function () {
+            if (meEx.test(me.value)) {
+                id1.innerHTML = '对'
+            } else {
+                id1.innerHTML = '错'
+            }
+        }
+
+        ord.onblur = function () {
+            if (ordEx.test(ord.value)) {
+                id2.innerHTML = '对'
+            } else {
+                id2.innerHTML = '错'
+            }
+        }
+
+        pwd.onblur = function () {
+            if (pwd.value != '') {
+                if (pwd.value == ord.value) {
+                    id3.innerHTML = '对'
+                } else {
+                    id3.innerHTML = '错'
+                }
+            }
+        }
+
+        ma.onblur = function () {
+            if (maEx.test(ma.value)) {
+                id5.innerHTML = '对'
+            } else {
+                id5.innerHTML = '错'
+            }
+        }
+
+        ne.onblur = function () {
+            if (neEx.test(ne.value)) {
+                id4.innerHTML = '对'
+            } else {
+                id4.innerHTML = '错'
+            }
+        }
+
+        shenfen.onblur = function () {
+            if (shenfenEx.test(shenfen.value)) {
+                id6.innerHTML = '对'
+            } else {
+                id6.innerHTML = '错'
+            }
+        }
+        var arr = []
+        var i = 0
+        document.getElementById('btn').onclick = function () {
+            if (id1.innerHTML == '对' && id2.innerHTML == '对' && id3.innerHTML == '对' && id4.innerHTML == '对' && id5.innerHTML == '对' && id6.innerHTML == '对') {
+                
+                var obj = {
+                    id: i++,
+                    me: me.value,
+                    ord: ord.value,
+                    ma: ma.value,
+                    ne: ne.value,
+                    shenfen: shenfen.value
+                }
+                arr.push(obj)
+                showList()
+            }
+        }
+
+        function showList() {
+            var str = ''
+            for (var i = 0; i < arr.length; i++) {
+                str += `
+                <tr>
+                    <td>${arr[i].me}</td>
+                    <td>${arr[i].ord}</td>
+                    <td>${arr[i].ne}</td>
+                    <td>${arr[i].ma}</td>
+                    <td>${arr[i].shenfen}</td>
+                    <td><button class="${arr[i].id}">删除</button></td>
+                </tr>
+                `
+            }
+            document.querySelector('tbody').innerHTML = str
+        }
+        document.querySelector('tbody').onclick = function () {
+            if (event.target.nodeName == 'BUTTON') {
+                console.log(event.target.className)
+                console.log(arr)
+                arr.splice(event.target.className,1)
+                showList()
+            }
+        }
+
+    }
+</script>
+
+</html>

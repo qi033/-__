@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      list-style: none;
+    }
+    ul,
+    ol,
+    li {
+      list-style: none;
+    }
+
+    #banner {
+      width: 800px;
+      height: 400px;
+      border: 1px solid #999;
+      overflow: hidden;
+      position: relative;
+    }
+    #imglist {
+      width: 3200px;
+      height: 400px;
+    }
+
+    #imglist img {
+      width: 800px;
+      height: 350px;
+      margin-top: 20px;
+    }
+    #imglist li {
+      float: left;
+    }
+    #ibun {
+      width: 50px;
+      height: 50px;
+      background-color: aqua;
+      border: 1px solid aqua;
+    }
+    .prev {
+      background-color: #666;
+      width: 30px;
+      height: 40px;
+      color: #fff;
+      text-align: center;
+      line-height: 40px;
+      position: absolute;
+      left: 5px;
+      top: 25%;
+      cursor: pointer;
+    }
+    .next {
+      background-color: #666;
+      width: 30px;
+      height: 40px;
+      color: #fff;
+      text-align: center;
+      line-height: 40px;
+      position: absolute;
+      right: 45.5%;
+      top: 25%;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div id="banner">
+      <ul id="imglist">
+        <li><img src="../../图片文件 imge/图片1.webp" alt="" /></li>
+        <li><img src="../../图片文件 imge/图片2.webp" alt="" /></li>
+        <li><img src="../../图片文件 imge/图片3.webp" alt="" /></li>
+        <li><img src="../../图片文件 imge/图片4.webp" alt="" /></li>
+      </ul>
+    </div>
+    <div class="prev"><</div>
+    <div class="next">></div>
+  </body>
+  <script>
+    var eprve = document.querySelector(".prev");
+    var epext = document.querySelector(".next");
+    var left = 0;
+    var timer;
+    //做滚动函数run，通过样式marginleft进行移动
+    run();
+    function run() {
+      if (left <= -3200) {
+        left = 0;
+      }
+      imglist.style.marginLeft = left + "px";
+      var n = left % 800 == 0 ? (n = 800) : (n = 10);
+      //每10毫秒运行一次run,每次偏移left积累-10
+      left -= 10;
+      timer = setTimeout(run, n);
+    }
+    function imgchange(n) {
+      let lt = -(n * 800);
+      imglist.style.marginLeft = lt + "px";
+      left = lt;
+    }
+    eprve.onclick = function () {
+      // console.log("en");
+      let prevgo = Math.floor(-left / 800) - 1;
+      if (prevgo == -1) {
+        prevgo = 3;
+      }
+      imgchange(prevgo);
+    };
+    epext.onclick = function () {
+      // console.log("en");
+      let nextgo = Math.floor(-left / 800) + 1;
+      if (nextgo == 4) {
+        nextgo = 0;
+      }
+      imgchange(nextgo);
+    };
+  </script>
+</html>
